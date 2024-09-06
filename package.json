@@ -5,7 +5,7 @@
   "type": "module",
   "keywords": [],
   "author": "",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "description": "A collection of utilities I use for my projects.",
   "dependencies": {
     "bcrypt": "^5.1.1",

@@ -14,7 +14,7 @@ export class tzUtils {
      */
     connect(uri, privKey){
         if(typeof window === 'undefined'){
-            this.auth = new Auth(uri, privKey)
+            this.Auth = new Auth(uri, privKey)
         } else {
             console.log("You cant use tzUtils.connect inside a browser.")
         }

@@ -83,12 +83,34 @@ export class Auth {
 
             await user.save()
 
-            return { success: true, code: 1551 }
+            let token = jwt.sign({
+                id: search._id,
+                username: search.username,
+                email: search.email
+            }, this.privKey)
+
+            return { success: true, code: 1551,  token: token}
 
         } catch (e) {
             console.log(e)
             return { success: false, code: 1000 }
         }
+    }
+
+    /**
+     * Verify user token
+     * @function verifyToken
+     * @param {string} token - User token to verify.
+     * @returns {{success: boolean, code:number, tokenData:{id:string, username:string, email:string}?}}
+     */
+    verifyToken(token){
+        let result = jwt.verify(token, this.privKey)
+        if(typeof result == undefined || !result){
+            return { success: false, code: 3051}
+        }else{
+            return { success: true, code: 1551,  tokenData: result}
+        }
+        
     }
 
     userSchema() {

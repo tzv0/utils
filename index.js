@@ -2,14 +2,38 @@ import { Auth } from "./Auth.js"
 
 export class tzUtils {
     constructor() {
-        this.auth
+        this.Auth
     }
 
+
+    /**
+     * Sets `tzUtils.Auth` to and initiallizes the class `Auth`
+     * @param {uri} uri - URI for connecting to mongodb.
+     * @param {string} privKey - Private key or secret for the jsonwebtoken.
+     * @returns {void} 
+     */
     connect(uri, privKey){
-        this.auth = new Auth(uri, privKey)
+        if(typeof window === 'undefined'){
+            this.auth = new Auth(uri, privKey)
+        } else {
+            console.log("You cant use tzUtils.connect inside a browser.")
+        }
     }
     
-    timetampToTime(timestamp) {
+
+    /**
+     * Takes in the unix time and displays a nice time for users.
+     * @param {number} timestamp - Unix timestamp.
+     * @param {object} options - Currently the only implemented option is `isMDY`, which determines whether or not the date format is DDMMYYYY or MMDDYYYY
+     * @returns {string}
+     */
+    timetampToTime(timestamp, options) {
+        if(options == undefined) {
+            options = {}
+        }
+        if(options.isMDY == undefined){
+            options.isMDY = false
+        }
         var refDateObj = new Date(), curDateObj = new Date(timestamp)
         let isPM = 0
         if (refDateObj.getDate() === curDateObj.getDate() && refDateObj.getMonth() === curDateObj.getMonth() && refDateObj.getFullYear() === curDateObj.getFullYear()) {
@@ -93,8 +117,10 @@ export class tzUtils {
                 }
             }
         }
-        else {
+        else if(options.isMDY) {
             return (curDateObj.getMonth() + 1) + "/" + curDateObj.getDate() + "/" + curDateObj.getFullYear()
+        }else {
+            return  curDateObj.getDate() + "/" + (curDateObj.getMonth() + 1) + "/" + curDateObj.getFullYear()
         }
     }
 }

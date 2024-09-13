@@ -1,20 +1,24 @@
+import mongoose from "mongoose"
 import { Auth } from "./Auth.js"
 
 export class tzUtils {
     constructor() {
         this.Auth
+        this.DB
     }
 
-
     /**
-     * Sets `tzUtils.Auth` to and initiallizes the class `Auth`
+     * Sets `tzUtils.Auth` to and initiallizes the class `Auth`, and sets `tzUtils.DB` to `Mongoose.Connection`
      * @param {uri} uri - URI for connecting to mongodb.
      * @param {string} privKey - Private key or secret for the jsonwebtoken.
      * @returns {void} 
      */
     connect(uri, privKey){
         if(typeof window === 'undefined'){
-            this.Auth = new Auth(uri, privKey)
+
+            let h = mongoose.connect(uri)
+            this.Auth = new Auth(h, privKey)
+            this.DB = h
         } else {
             console.log("You cant use tzUtils.connect inside a browser.")
         }

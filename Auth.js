@@ -1,15 +1,12 @@
-import mongoose from "mongoose"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 export class Auth {
-    constructor(uri, privKey) {
+    constructor(mongoose, privKey) {
         this.privKey = privKey
         this.mongoose = mongoose
-        this.mongoose.connect(uri)
         this.userSchema = this.userSchema()
         this.userModel = this.mongoose.model("Users", this.userSchema)
-
     }
 
     /**

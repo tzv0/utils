@@ -13,10 +13,10 @@ export class tzUtils {
      * @param {string} privKey - Private key or secret for the jsonwebtoken.
      * @returns {void} 
      */
-    connect(uri, privKey){
+    async connect(uri, privKey){
         if(typeof window === 'undefined'){
 
-            let h = mongoose.connect(uri)
+            let h = await mongoose.connect(uri)
             this.Auth = new Auth(h, privKey)
             this.DB = h
         } else {
@@ -24,7 +24,6 @@ export class tzUtils {
         }
     }
     
-
     /**
      * Takes in the unix time and displays a nice time for users.
      * @param {number} timestamp - Unix timestamp.

@@ -1,4 +1,6 @@
 import bcrypt from "bcrypt"
+import { Schema } from "mongoose"
+
 import jwt from "jsonwebtoken"
 
 export class Auth {
@@ -27,7 +29,7 @@ export class Auth {
                 return { success: false, code: 2071 }
             }
 
-            let search = await this.userModel.findOne({ email })
+            let search = await this.userModel.findOne({ email: email.toLowerCase()  })
             if (search == null || search.length == 0) {
                 return { success: false, code: 2081 }
             }
@@ -67,26 +69,24 @@ export class Auth {
                 return { success: false, code: 1071 }
             }
 
-            let search = await this.userModel.exists({ username })
+            let search = await this.userModel.exists({ username: username.toLowerCase() })
             if (search != null) {
                 return { success: false, code: 1081 }
             }
 
             let user = new this.userModel({
-                username,
-                email,
+                username:username.toLowerCase(),
+                email:email.toLowerCase(),
                 password: bcrypt.hashSync(password, 12)
             })
 
-            await user.save()
+            let userLogin 
 
-            let token = jwt.sign({
-                id: search._id,
-                username: search.username,
-                email: search.email
-            }, this.privKey)
+            await user.save().then(async r => userLogin = await this.login(email.toLowerCase(),password))
 
-            return { success: true, code: 1551,  token: token}
+            userLogin.code = 1551
+
+            return userLogin
 
         } catch (e) {
             console.log(e)
@@ -111,7 +111,7 @@ export class Auth {
     }
 
     userSchema() {
-        return new this.mongoose.Schema({
+        return new Schema({
             username: { type: String, match: /[a-zA-Z0-9]{3,10}/, required: true },
             email: { type: String, match: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/, required: true },
             password: { type: String, required: true },

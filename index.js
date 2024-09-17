@@ -11,7 +11,7 @@ export class tzUtils {
      * Sets `tzUtils.Auth` to and initiallizes the class `Auth`, and sets `tzUtils.DB` to `Mongoose.Connection`
      * @param {uri} uri - URI for connecting to mongodb.
      * @param {string} privKey - Private key or secret for the jsonwebtoken.
-     * @returns {void} 
+     * @return {void} 
      */
     async connect(uri, privKey){
         if(typeof window === 'undefined'){
@@ -28,7 +28,7 @@ export class tzUtils {
      * Takes in the unix time and displays a nice time for users.
      * @param {number} timestamp - Unix timestamp.
      * @param {object} options - Currently the only implemented option is `isMDY`, which determines whether or not the date format is DDMMYYYY or MMDDYYYY
-     * @returns {string}
+     * @return {string}
      */
     timetampToTime(timestamp, options) {
         if(options == undefined) {

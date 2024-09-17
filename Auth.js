@@ -18,7 +18,7 @@ export class Auth {
      * @function login
      * @param {string} email - The user's email.
      * @param {string} password - the user's password.
-     * @returns {Promise<{success: boolean, code:number, token:string?}>} A promise that resolves to the result of the registration.
+     * @return {Promise<{success: boolean, code:number, token:string?}>} A promise that resolves to the result of the registration.
      */
     async login(email, password) {
         try {
@@ -55,7 +55,7 @@ export class Auth {
      * @param {string} username - The user's username.
      * @param {string} email - The user's email address.
      * @param {string} password - the user's password.
-     * @returns {Promise<{success: boolean, code:number, token:string?}>} A promise that resolves to the result of the registration.
+     * @return {Promise<{success: boolean, code:number, token:string?}>} A promise that resolves to the result of the registration.
      */
     async register(username, email, password) {
         try {
@@ -98,7 +98,7 @@ export class Auth {
      * Verify user token
      * @function verifyToken
      * @param {string} token - User token to verify.
-     * @returns {{success: boolean, code:number, tokenData:{id:string, username:string, email:string}?}}
+     * @returns {Promise<{success: boolean, code:number, tokenData:{id:string, username:string, email:string}?}>}
      */
     verifyToken(token){
         let result = jwt.verify(token, this.privKey)

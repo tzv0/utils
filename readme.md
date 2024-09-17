@@ -22,7 +22,7 @@ sets `tzUtils.Auth` to and initiallizes the class `Auth`, and sets `tzUtils.DB` 
 | privKey | <code>string</code> | Private key or secret for the jsonwebtoken. |
 
 ## timetampToTime(timestamp, options) ⇒ <code>string</code>
-sets `tzUtils.Auth` to and initiallizes the class `Auth`, and sets `tzUtils.DB` to `Mongoose.Connection`
+Takes in the unix time and displays a nice time for users.
 
 **Kind**: global function  
 **Returns**: <code>string</code>

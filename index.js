@@ -30,7 +30,7 @@ export class tzUtils {
      * @param {object} options - Currently the only implemented option is `isMDY`, which determines whether or not the date format is DDMMYYYY or MMDDYYYY
      * @return {string}
      */
-    timetampToTime(timestamp, options) {
+    timestampToTime(timestamp, options) {
         if(options == undefined) {
             options = {}
         }

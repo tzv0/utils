@@ -21,7 +21,7 @@ sets `tzUtils.Auth` to and initiallizes the class `Auth`, and sets `tzUtils.DB` 
 | uri | <code>string</code> | URI for connecting to mongodb. |
 | privKey | <code>string</code> | Private key or secret for the jsonwebtoken. |
 
-## timetampToTime(timestamp, options) ⇒ <code>string</code>
+## timestampToTime(timestamp, options) ⇒ <code>string</code>
 Takes in the unix time and displays a nice time for users.
 
 **Kind**: global function  
